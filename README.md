@@ -6,7 +6,7 @@
 |---|---|
 | **Explorer + Trust Map** | Load any protein from the AlphaFold DB (or upload a `.pdb`). 3D view coloured by confidence, a clickable per-residue *confidence barcode*, and a plain-English report of which regions you can trust (pLDDT + PAE). |
 | **Variant Lens** | Type a mutation (`R175H`, `p.Arg175His`). FoldLens checks it against the real sequence, finds the residue's 3D neighbourhood, and writes a *mutation story* with a 0-100 disruption score. Optional ESM-2 pretrained language-model score. |
-| **Ligand Bench** | Paste SMILES and rank molecules by drug-likeness (QED, Lipinski, TPSA) with RDKit. A fast filter before docking. |
+| **Ligand Bench** | Paste SMILES and rank molecules by drug-likeness (QED, Lipinski, TPSA) with RDKit. A fast filter before docking. If the server can't load RDKit, it falls back to RDKit's WebAssembly build in the browser (rule-of-five ranking, no QED). |
 | **Fold School** | Five hands-on lessons on real structures (haemoglobin, p53, GFP...) with quizzes that deep-link into the tool. |
 
 No GPU needed: structures come precomputed from the [AlphaFold Protein Structure Database](https://alphafold.ebi.ac.uk).
