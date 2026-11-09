@@ -49,9 +49,9 @@ def analyze(residues: list[Residue], wt: str, pos: int, mt: str, esm: dict | Non
                  f"with {len(contacts)} close neighbours.")
     if buried:
         score += 20
-    if abs(d_chg) >= 1:
+    if abs(d_chg) >= 0.5:  # catches R->H, which loses most of its charge at pH 7.4
         score += 25 if buried else 12
-        story.append(f"The charge changes ({'gains' if d_chg > 0 else 'loses'} {abs(d_chg):g}); "
+        story.append(f"The charge changes ({'gains' if d_chg > 0 else 'loses'} ~{round(abs(d_chg))}); "
                      + ("burying a charge is usually destabilizing." if buried else "this can disrupt surface interactions or binding."))
     if abs(d_vol) > 40:
         score += 20 if buried else 6
