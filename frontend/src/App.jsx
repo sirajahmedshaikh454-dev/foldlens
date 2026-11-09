@@ -23,9 +23,13 @@ export default function App() {
   useEffect(() => {
     const on = () => { setRoute(parse()); window.scrollTo(0, 0); };
     window.addEventListener("hashchange", on);
-    api("/health").then(setHealth).catch(() => setHealth({ down: true }));
     return () => window.removeEventListener("hashchange", on);
   }, []);
+
+  // re-check on every page change so the banner clears once the backend comes up
+  useEffect(() => {
+    api("/health").then(setHealth).catch(() => setHealth({ down: true }));
+  }, [route.page, route.arg]);
 
   const go = (hash) => { location.hash = hash; };
 
@@ -43,7 +47,7 @@ export default function App() {
       </header>
       <main>
         {health.down && <p className="error card" role="alert">Can't reach the FoldLens API. Start the Flask backend on port 5000.</p>}
-        {route.page === "ligands" ? <LigandBench rdkitReady={health.rdkit !== false} />
+        {route.page === "ligands" ? <LigandBench rdkitReady={health.rdkit === true} />
           : route.page === "school" ? <FoldSchool go={go} />
           : <Explorer key={route.arg} initial={route.arg} esmReady={!!health.esm} />}
       </main>
