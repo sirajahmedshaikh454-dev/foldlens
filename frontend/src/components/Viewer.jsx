@@ -20,7 +20,7 @@ export default function Viewer({ pdb, focus, contacts = [], onPick }) {
     const v = viewer.current;
     if (!v) return;
     v.clear();
-    if (!pdb) return v.render();
+    if (!pdb) { v.render(); return; }
     v.addModel(pdb, "pdb");
     v.setClickable({ atom: "CA" }, true, (atom) => pick.current?.(atom.resi));
     v.zoomTo();
