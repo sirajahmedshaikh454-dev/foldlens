@@ -1,8 +1,13 @@
+export const API_DOWN = "Can't reach the FoldLens API. Start the Flask backend (python backend/app.py) and try again.";
+
 export async function api(path, opts) {
-  const r = await fetch(`/api${path}`, opts);
+  let r;
+  try { r = await fetch(`/api${path}`, opts); }
+  catch { throw new Error(API_DOWN); } // network error: server not running
   const isJson = r.headers.get("content-type")?.includes("json");
   const body = isJson ? await r.json() : await r.text();
-  if (!r.ok) throw new Error((isJson && body.error) || `Request failed (${r.status})`);
+  // non-JSON 5xx comes from the dev proxy when Flask is down
+  if (!r.ok) throw new Error((isJson && body.error) || (r.status >= 500 ? API_DOWN : `Request failed (${r.status})`));
   return body;
 }
 
