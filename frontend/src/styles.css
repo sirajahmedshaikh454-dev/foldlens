@@ -158,7 +158,8 @@ label.btn { display: inline-flex; }
 
 /* tables */
 .table-wrap { overflow-x: auto; }
-table { width: 100%; border-collapse: collapse; font-size: .9rem; }
+table { width: 100%; min-width: 760px; border-collapse: collapse; font-size: .9rem; } /* scroll sideways instead of breaking numbers */
+th, td.mono:not(:nth-child(2)) { white-space: nowrap; }
 th, td { text-align: left; padding: .6rem .5rem; border-bottom: 1px solid var(--border); vertical-align: top; }
 th { font-weight: 600; color: var(--muted-fg); font-size: .8rem; text-transform: uppercase; letter-spacing: .04em; }
 td.mono { word-break: break-all; max-width: 260px; font-size: .8rem; }
